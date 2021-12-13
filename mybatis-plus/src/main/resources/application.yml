@@ -1,0 +1,31 @@
+server:
+  # 服务端口
+  port: 8010
+
+  tomcat:
+    max-swallow-size: 600MB #修改tomcat的吞吐量
+
+  servlet:
+    context-path: /mybatis-plus
+
+
+spring:
+  application:
+    name: mybatis-plus
+
+  profiles:
+    active: dev
+
+  servlet:
+    multipart:
+      # 修改请求文件大小
+      max-request-size: 400MB
+      max-file-size: 200MB
+      enabled: true
+
+
+#==========整合mybatisPlus==========
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

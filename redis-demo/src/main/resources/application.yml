@@ -1,0 +1,82 @@
+server:
+  port: 8030
+
+  tomcat:
+    max-swallow-size: 600MB
+
+  servlet:
+    context-path: /redis-demo
+
+
+spring:
+  application:
+    name: redis-demo
+
+  servlet:
+    multipart:
+      max-request-size: 400MB
+      max-file-size: 200MB
+      enabled: true
+
+  datasource:
+    name: test1
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://10.10.20.170:9999/test?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 10jqka@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initial-size: 1
+    min-idle: 5
+    max-active: 20
+    # 配置获取连接等待超时的时间
+    max-wait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    time-between-eviction-runs-millis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    min-evictable-idle-time-millis: 300000
+    validation-query: SELECT 1 FROM DUAL
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    pool-prepared-statements: true
+    #?? 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    max-pool-prepared-statement-per-connection-size: 20
+    filters: stat,wall
+    use-global-data-source-stat: true
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+  redis:
+    cluster:
+      nodes: 10.10.20.170:7000,10.10.20.170:7001,10.10.20.170:7002,10.10.20.170:7003,10.10.20.170:7004,10.10.20.170:7005
+      max-redirects: 3
+      lettuce:
+        pool:
+          max-idle: 16
+          max-active: 32
+          min-idle: 8
+#    # Redis服务器地址
+#    host: 10.10.20.170
+#    # Redis服务器连接端口
+#    port: 7000
+#    pool:
+#      # 连接池最大连接数（使用负值表示没有限制）
+#      max-active: 8
+#      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#      max-wait: -1
+#      # 连接池中的最大空闲连接
+#      max-idle: 8
+#      # 连接池中的最小空闲连接
+#      min-idle: 0
+#    # 连接超时时间（毫秒）
+#    timeout: 10
+
+
+#==========mybatisPlus==========
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

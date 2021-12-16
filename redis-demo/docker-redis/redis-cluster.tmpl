@@ -1,0 +1,9 @@
+# redis.conf 配置文件
+
+port ${port}
+cluster-enabled yes                 ## 集群模式开启
+cluster-config-file nodes.conf      ## 集群配置名
+cluster-announce-ip 10.10.20.170    ## 实际为各节点网卡分配ip
+cluster-announce-port ${port}       #̲# 节点映射端口
+cluster-node-timeout 5000           ## 超时时间
+appendonly yes                      ##持久化模式
